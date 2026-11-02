@@ -158,7 +158,7 @@ def verdict_kern(a: Analysis) -> tuple[str, str]:
     q = a.ratios[s.regel]
     g = guarantee(s.regel)
     text = (f"**{s.regel}** braucht {a.bins[s.regel]} Behälter, das {a.ref_label} {a.ref}: das **{q:.3f}-Fache**. {guarantee_phrase(s.regel, g)} "
-            f"Die Folge nutzt davon {q / g * 100:.0f} %.")
+            f"Der Quotient beträgt {q / g * 100:.0f} % der Garantie.")
     kind = "success" if q < OK_QUOTIENT else "info" if q < WARN_QUOTIENT else "warning"
     return kind, text
 

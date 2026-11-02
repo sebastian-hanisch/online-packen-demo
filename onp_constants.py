@@ -76,7 +76,7 @@ PRESETS = {
     "Harmonic im Alltag: drei Größen": {"regel": "Harmonic", "folge": "drei Größen", "ordnung": "wie erzeugt", "n": 1200, "seed": DEFAULT_SEED},
 }
 PRESET_HELP = {
-    "Dreiphasenfolge (Gegner)": "Erst kleine, dann mittlere, dann große Stücke: First Fit braucht zwei Drittel mehr Behälter als nötig, jede andere Regel auch.",
+    "Dreiphasenfolge (Gegner)": "Erst kleine, dann mittlere, dann große Stücke: First Fit braucht zwei Drittel mehr Behälter als nötig, die drei anderen Online-Regeln auch (die Referenz FFD nicht).",
     "Dieselben Stücke, zufällig gemischt": "Genau dieselben Stücke wie im ersten Preset, nur gemischt: First Fit liegt dicht am Optimum.",
     "Mini-Instanz von Hand": "Vier Stücke 3600, 3000, 2400, 3000: Next Fit braucht drei Behälter, First Fit und Best Fit zwei. Zum Nachrechnen.",
     "Next-Fit-Gegner: halb und winzig": "Halber Behälter, winziges Stück, im Wechsel: Next Fit verbraucht fast das Doppelte, First Fit legt die winzigen Stücke in den ersten Behälter.",

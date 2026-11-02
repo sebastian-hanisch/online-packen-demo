@@ -91,9 +91,9 @@ with st.expander("So funktioniert Online-Packen", expanded=True):
         """
 1. **Next Fit** legt das Stück in den zuletzt geöffneten Behälter und öffnet einen neuen, wenn es nicht passt: schnell, aber ältere Behälter bleiben ungenutzt.
 2. **First Fit** legt es in den ersten Behälter, in den es passt; **Best Fit** in den passenden Behälter, der danach am vollsten ist.
-3. **Harmonic** teilt die Stücke nach Größe in Klassen und packt jede Klasse für sich (j Stücke der Klasse j je Behälter): schlechter im Durchschnitt, aber mit anderer Garantie.
-4. **Die Referenz** kennt alle Stücke vorher: **First Fit Decreasing** sortiert absteigend und ist fast immer optimal. Für die Gegnerfolgen ist das Optimum von Hand bekannt.
-5. **Garantie ist nicht Alltag:** die Garantien (Next Fit 2, First Fit und Best Fit 1,7) werden nur von Folgen erreicht, die gegen die Regel gebaut sind; was zufällige Stücke und die Reihenfolge ausmachen, zeigen die Experimente.
+3. **Harmonic** teilt die Stücke nach Größe in Klassen und packt jede Klasse für sich (j Stücke der Klasse j je Behälter): schlechter im Durchschnitt, bei gleich hoher Garantie (1,70 für sechs Klassen), dafür unabhängig von der Reihenfolge der größeren Stücke.
+4. **Die Referenz** kennt alle Stücke vorher: **First Fit Decreasing** sortiert absteigend und ist meist optimal oder einen Behälter darüber (Obergrenze des Optimums). Für die Gegnerfolgen ist das Optimum von Hand bekannt.
+5. **Garantie ist nicht Alltag:** die Garantien (Next Fit 2, First Fit und Best Fit 1,7) werden von zufälligen Stücken weit unterschritten; angenähert werden sie von gegen die Regel gebauten Folgen; was zufällige Stücke und die Reihenfolge ausmachen, zeigen die Experimente.
         """
     )
 
@@ -212,7 +212,7 @@ st.markdown(
 | **Jedes Stück wird sofort und endgültig platziert** | Darf man umpacken oder kurz warten, ändert sich das Problem; nicht modelliert. | – |
 | **Die Stückgrößen sind vorab ganz unbekannt** | Eine Vorhersage über die kommenden Größen lässt sich nutzen, darf aber nicht blind gelten; Experiment 2 zeigt, wie viel an der Reihenfolge hängt. | Vorhersagen |
 | **Eine Dimension, gleich große Behälter** | Gewicht und Volumen zugleich, verschiedene Behältertypen und Entladereihenfolgen fehlen. | – |
-| **Alle Stücke gleich wichtig** | Hat jedes Stück einen Wert und die Kapazität reicht nicht für alle, wird aus dem Packen eine Annahmeentscheidung. | Online-Rucksack |
+| **Alle Stücke gleich wichtig** | Hat jedes Stück einen Wert und die Kapazität reicht nicht für alle, wird aus dem Packen eine Annahmeentscheidung. | Online-Allokation |
 | **Die Verteilungen sind erfunden** | Gleichverteilung, Lognormal und drei Größen sind Modelle, keine Messung echter Fracht. | – |
 """
 )
@@ -224,7 +224,7 @@ with st.expander("⚠️ Annahmen, Grenzen und bekannte Probleme"):
 
 **Grenzen.** Die Demo ist nur an erfundenen Folgen geprüft. Die Garantien sind **asymptotisch** (ohne additive Konstante); bei wenigen Stücken können Quotienten abweichen. Die Garantie von Harmonic mit {C.HARMONIC_M} Klassen ist eine eigene Herleitung über eine Gewichtsfunktion; ihr Grenzwert für viele Klassen stimmt mit dem Literaturwert 1,69103 überein, die Quelle selbst wurde nicht eingesehen. Next Fit 2 und Best Fit 1,7 stützen sich auf Vorlesungsfolien beziehungsweise einen Eintragsvermerk. Advanced Harmonic (beste bekannte Obergrenze 1,57829) und Super Harmonic sind nicht umgesetzt.
 
-**Bekannte Probleme und Unsicherheiten.** Die Zahl der Stücke wird bei den Gegnerfolgen auf ein Vielfaches von 3 (Dreiphasenfolge), 2 (abwechselnd) oder 4 (von Hand) abgerundet. Bei der Dreiphasenfolge nähert sich der Quotient 5/3 erst für große n. Bei „abwechselnd halb und winzig“ passen alle winzigen Stücke in den Platz neben den halben Stücken oder in einen weiteren Behälter (n höchstens 5000).
+**Bekannte Probleme und Unsicherheiten.** Die Zahl der Stücke wird bei den Gegnerfolgen auf ein Vielfaches von 3 (Dreiphasenfolge), 2 (abwechselnd) oder 4 (von Hand) abgerundet. Bei der Dreiphasenfolge ist der Quotient 5/3 erreicht, wenn die Gruppengröße durch 6 teilbar ist; sonst liegt er knapp darunter. Bei „abwechselnd halb und winzig“ passen alle winzigen Stücke in den Platz neben den halben Stücken oder in einen weiteren Behälter (n höchstens 5000).
         """
     )
 
@@ -249,7 +249,7 @@ with st.expander("📐 Mathematische Formulierung"):
 
 **Harmonic.** Ein Stück mit $C/(j+1) < s \le C/j$ gehört zur Klasse $j$ ($j = 1, \dots, M-1$), je $j$ Stücke teilen sich einen Behälter; Stücke mit $s \le C/M$ gehen per Next Fit in eigene Behälter. Gewichte: Klasse $j$ zählt $1/j$, ein kleines Stück $\tfrac{{M}}{{M-1}} \cdot s/C$. Ein Behälter der Optimallösung trägt höchstens das Gewicht $w_M$, und das ist die Garantie: für $M = {C.HARMONIC_M}$ ist $w_M = {guarantee('Harmonic'):.2f}$, für $M \to \infty$ strebt $w_M$ gegen $\sum_i 1/(t_i - 1) \approx 1{{,}}691$ mit $t_1 = 2$, $t_{{i+1}} = t_i(t_i - 1) + 1$.
 
-**Referenz.** First Fit Decreasing sortiert die Stücke absteigend und wendet First Fit an; sie ist offline und fast immer optimal.
+**Referenz.** First Fit Decreasing sortiert die Stücke absteigend und wendet First Fit an; sie ist offline und meist optimal oder einen Behälter darüber.
 
 **Literatur (nicht nachgebaut; Auszüge per Websuche gesehen, Volltexte nicht eingesehen).** G. Dósa, J. Sgall (2013): First Fit 1,7. C. C. Lee, D. T. Lee (1985): Harmonic, Grenzwert 1,69103. A. C. Yao (1980): untere Schranke 1,5. J. Balogh, J. Békési, G. Dósa, L. Epstein, A. Levin (2018, 2021): Obergrenze 1,57829, untere Schranke 1,54278. Hier belegt sind die Zahlen durch vollständiges Durchrechnen der Folgen.
         """

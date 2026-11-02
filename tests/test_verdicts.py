@@ -15,7 +15,7 @@ def test_kern_names_bins_reference_ratio_guarantee_and_share():
     kind, text = ev.verdict_kern(_analysis())
     assert kind == "warning"
     assert "**First Fit** braucht 333 Behälter, das Optimum 200: das **1.665-Fache**." in text
-    assert "Die Garantie (asymptotisch) ist 1.7." in text and "Die Folge nutzt davon 98 %." in text
+    assert "Die Garantie (asymptotisch) ist 1.7." in text and "Der Quotient beträgt 98 % der Garantie." in text
 
 
 def test_kern_thresholds_are_one_point_one_and_one_point_five():
@@ -27,9 +27,9 @@ def test_kern_thresholds_are_one_point_one_and_one_point_five():
 
 def test_kern_next_fit_and_harmonic_wording():
     _, text = ev.verdict_kern(_analysis(regel="Next Fit", q=1.5, bins=300, ref=200))
-    assert text.startswith("**Next Fit** braucht 300") and "Die Garantie (asymptotisch) ist 2." in text and "nutzt davon 75 %." in text
+    assert text.startswith("**Next Fit** braucht 300") and "Die Garantie (asymptotisch) ist 2." in text and "beträgt 75 % der Garantie." in text
     _, text = ev.verdict_kern(_analysis(regel="Harmonic", q=1.7, label="FFD"))
-    assert "das FFD 200" in text and "für 6 Klassen aus einer eigenen Herleitung) ist 1.70." in text and "nutzt davon 100 %." in text
+    assert "das FFD 200" in text and "für 6 Klassen aus einer eigenen Herleitung) ist 1.70." in text and "beträgt 100 % der Garantie." in text
 
 
 def test_guarantee_values():

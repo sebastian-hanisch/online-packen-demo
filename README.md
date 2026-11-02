@@ -37,7 +37,7 @@ Alle Zahlen in `tests/test_claims.py` nachgerechnet. „Quotient“ steht für B
 | Mini-Instanz von Hand (3600, 3000, 2400, 3000)? | Next Fit 3 Behälter, First Fit 2, Best Fit 2, Harmonic 3, Optimum 2. |
 | Next Fit gegen halb und winzig? | Quotient 1,667 / 1,961 / **1,996** bei 20 / 200 / 2000 Stücken: nähert sich 2. First Fit, Best Fit und Harmonic liegen bei **1,000**: First Fit legt alle winzigen Stücke in den ersten Behälter. |
 | Dreiphasenfolge (600 Stücke je Gruppe)? | **Alle vier Regeln** brauchen 100, 400 und 1000 Behälter nach Gruppe 1, 2, 3 gegen das Optimum 100, 300, 600: Quotient 1,000, 1,333 und **1,667**. FFD (offline) braucht 100, 300 und 600. |
-| Dieselben 1800 Stücke gemischt? | First Fit und Best Fit **1,017** (610 Behälter), Next Fit 1,267, Harmonic bleibt bei **1,667**. In absteigender Reihenfolge: First Fit und Best Fit 1,000 (das ist FFD), Next Fit und Harmonic 1,667. Die gegnerische Reihenfolge ist zugleich die aufsteigende. Bei 60 Stücken je Gruppe liegt First Fit gemischt bei 1,050. |
+| Dieselben 1800 Stücke gemischt? | First Fit und Best Fit **1,017** (610 Behälter), Next Fit 1,267, Harmonic bleibt bei **1,667**; das gilt für die eine Mischung mit Seed 7, bei 40 anderen Mischungen liegt First Fit zwischen 1,007 und 1,052, Next Fit zwischen 1,25 und 1,28, Harmonic bei 1,667. In absteigender Reihenfolge: First Fit und Best Fit 1,000 (das ist FFD), Next Fit und Harmonic 1,667. Die gegnerische Reihenfolge ist zugleich die aufsteigende. Bei Gruppengröße 60 liegt First Fit gemischt bei 1,050 (Seed 7; bei 40 anderen Mischungen zwischen 1,017 und 1,133). |
 | Alltag, sieben Verteilungen (2000 Stücke, zehn Seeds)? | First Fit **1,001 bis 1,043**, Best Fit **1,001 bis 1,026**, Next Fit 1,033 bis 1,372, Harmonic 1,033 bis 1,414. Garantien: First Fit und Best Fit 1,7, Next Fit 2. |
 | Wo ist Harmonic am schlechtesten? | Bei „drei Größen“ **1,414** gegen First Fit 1,001; bei (0,2, 0,8] 1,390 gegen 1,043. Harmonic hat dieselbe Garantie wie First Fit (1,70 für sechs Klassen) und ist im Alltag deutlich schlechter. |
 | Wächst die Länge (gleich (0, 1])? | First Fit 1,044 / 1,049 / 1,041 / **1,028** und Best Fit 1,037 / 1,037 / 1,027 / **1,017** bei 50 / 200 / 1000 / 4000 Stücken; Next Fit 1,233 / 1,280 / 1,318 / 1,317. |
@@ -57,7 +57,7 @@ Alle Zahlen in `tests/test_claims.py` nachgerechnet. „Quotient“ steht für B
 
 ## Verifikation
 
-- **Umfang:** 207 Tests (siehe `pytest --collect-only -q tests`), zwei bis zweieinhalb Minuten lokal.
+- **Umfang:** 207 Tests (siehe `pytest --collect-only -q tests`), rund 100 Sekunden lokal (gemessen: 96 Sekunden).
 - **Kern:** Zuordnungen gegen Handrechnung auf der Mini-Instanz, auf den Gegnerfolgen mit sechs Stücken je Gruppe und auf kleinen Folgen; Randfälle (ein Stück, volles Stück, leere Folge).
 - **Orakel** (`tests/test_oracle_online_packen.py`): das Optimum exakt per CP-SAT gegen die **Aufzählung aller Zuordnungen**; das von Hand bekannte Optimum der Gegnerfolgen gegen CP-SAT; First Fit, Best Fit und Harmonic gegen zweite, plumpere Fassungen; FFD nie besser als das Optimum, Untergrenze nie darüber.
 - **Eigenschaften** (`tests/test_eigenschaften_online_packen.py`): kein Behälter überfüllt (unabhängiger Prüfer); Online-Eigenschaft (Präfix); Skalierung von Stücken und Behälter ändert nichts; Next Fit höchstens das Doppelte der Untergrenze; First Fit höchstens ⌊1,7 · FFD⌋; First Fit auf absteigender Folge gleich FFD; Harmonic ohne kleine Stücke reihenfolgeblind.
@@ -89,7 +89,7 @@ Alle Zahlen in `tests/test_claims.py` nachgerechnet. „Quotient“ steht für B
 
 - **Advanced Harmonic und Super Harmonic**, Verfahren mit Zufall und mit Umpacken.
 - **Mehrdimensionales Packen**, Gewicht und Volumen zugleich, verschiedene Behältertypen: `pack_demo` und die Seefracht-Demos.
-- **Annahmeentscheidungen** (nicht jedes Stück wird gebraucht): ein eigenes Stück der Reihe.
+- **Annahmeentscheidungen** (nicht jedes Stück wird gebraucht): Online-Allokation, ein eigenes Stück der Reihe.
 - **Vorhersagen** über die Stückgrößen: ein eigenes Stück der Reihe.
 - **Echte Frachtdaten** und PDF-Export.
 
